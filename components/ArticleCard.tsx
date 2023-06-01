@@ -4,8 +4,8 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import { Button, CardActions, CardMedia } from "@mui/material";
+import Link from "next/link";
 
 interface ArticleProps {
   title: string;
@@ -20,6 +20,7 @@ export default function ArticleCard({
   imageId,
   date,
 }: ArticleProps) {
+
   return (
     <>
       <Card
@@ -40,8 +41,8 @@ export default function ArticleCard({
           }}
         />
         <CardContent>
-          <a
-            // href={sessionStorage.getItem("email") && sessionStorage.getItem("password") ? `/articles/${id}` : `/testForm`}
+          <Link
+            // href={email !== null && password !== null ? `/articles/${id}` : `/testForm`}
             href={`/articles/${id}`}
             style={{
               textDecoration: "none",
@@ -60,7 +61,7 @@ export default function ArticleCard({
             >
               {title}
             </Typography>
-          </a>
+          </Link>
           <Typography variant="h6" component={"div"} sx={{ color: "#eae2b7" }}>
             {date}
           </Typography>
@@ -71,8 +72,8 @@ export default function ArticleCard({
             color="primary"
             variant="contained"
           >
-            {/* <a href={sessionStorage.getItem("email") && sessionStorage.getItem("password") ? `/articles/${id}` : `/testForm`}>Read More</a> */}
-            <a href={`/articles/${id}`}>Read More</a>
+            {/* <a href={email !== null && password !== null ? `/articles/${id}` : `/testForm`}>Read More</a> */}
+            <Link href={`/articles/${id}`}>Read More</Link>
           </Button>
         </CardActions>
       </Card>
