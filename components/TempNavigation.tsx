@@ -14,15 +14,15 @@ import {
 } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import container from "postcss/lib/container";
+import Link from "next/link";
+import {signIn} from "next-auth/react";
 
 const drawerWidth = 240;
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
-]
-
+];
 
 const ImprovedNavigation = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -34,17 +34,16 @@ const ImprovedNavigation = () => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        <a href="/">BLOG.NET</a>
+        <Link href="/">BLOG.NET</Link>
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item,index) => (
+        {navItems.map((item, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <a href={`${item.href}`}>
-              <ListItemText primary={item.name} />
-              </a>
-              
+              <Link href={`${item.href}`}>
+                <ListItemText primary={item.name} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
@@ -59,9 +58,8 @@ const ImprovedNavigation = () => {
           backgroundColor: "#003049",
           marginBottom: "2rem",
           maxHeight: "64px",
-          position:"static"
+          position: "static",
         }}
-        
       >
         <Toolbar>
           <IconButton
@@ -79,14 +77,12 @@ const ImprovedNavigation = () => {
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
             color={"#eae2b7"}
           >
-            <a href="/">BLOG.NET</a>
+            <Link href="/">BLOG.NET</Link>
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item,index) => (
+            {navItems.map((item, index) => (
               <Button key={index} sx={{ color: "#fff" }}>
-                <a href={`${item.href}`}>
-                  {item.name}
-                </a>
+                <Link href={`${item.href}`}>{item.name}</Link>
               </Button>
             ))}
           </Box>

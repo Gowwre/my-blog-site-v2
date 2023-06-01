@@ -3,10 +3,15 @@
 import { Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { Button, Card, CardContent, CardHeader, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  TextField,
+} from "@mui/material";
 
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -37,6 +42,7 @@ function LoginFormV2() {
       validateOnChange={false}
       onSubmit={(values, actions) => {
         actions.resetForm();
+        //this code is meant to set session into the browser but I have yet to make it work
         // sessionStorage.setItem("email", values.email);
         // sessionStorage.setItem("password", values.password);
       }}
@@ -45,33 +51,31 @@ function LoginFormV2() {
         <Card className="flex flex-col items-center p-5">
           <CardHeader title="Login" />
           <CardContent>
-        <Form className="flex justify-between">
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            onChange={props.handleChange}
-            onBlur={props.handleBlur}
-            
-          />
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={props.handleChange}
-            onBlur={props.handleBlur}
-            
-          />
+            <Form className="flex justify-between">
+              <TextField
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+              />
+              <TextField
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+              />
 
-          <Button disabled={props.isSubmitting} type="submit">
-            Submit
-          </Button>
-          {props.errors.email && <p>{props.errors.email}</p>}
-          {props.errors.password && <p>{props.errors.password}</p>}
-        </Form>
-        </CardContent>
+              <Button disabled={props.isSubmitting} type="submit">
+                Submit
+              </Button>
+              {props.errors.email && <p>{props.errors.email}</p>}
+              {props.errors.password && <p>{props.errors.password}</p>}
+            </Form>
+          </CardContent>
         </Card>
       )}
     </Formik>

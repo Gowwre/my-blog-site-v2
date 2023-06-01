@@ -1,4 +1,3 @@
-"use client";
 
 import * as React from "react";
 import Card from "@mui/material/Card";
@@ -68,8 +67,8 @@ export default function ArticleCard({
         </CardContent>
         <CardActions>
           <Button
-            className="absolute left-4 bottom-4 border-r-2"
-            color="primary"
+            className="absolute left-4 bottom-4 border-r-2 bg-orange-400 text-blue-950"
+            
             variant="contained"
           >
             {/* <a href={email !== null && password !== null ? `/articles/${id}` : `/testForm`}>Read More</a> */}

@@ -2,6 +2,7 @@ import React from "react";
 import { getPostData } from "@/lib/articles";
 import CustomButton from "@/components/Button";
 import "./page.module.css"
+import Link from "next/link";
 
 interface ArticleProps {
   params: {
@@ -27,7 +28,7 @@ async function ArticlePage({ params }: ArticleProps) {
       </article>
       <div className="mt-6">
         <CustomButton>
-          <a href={"/"}>Return home</a>
+          <Link href={"/"}>Return home</Link>
         </CustomButton>
       </div>
     </>
