@@ -1,6 +1,5 @@
 import React from "react";
 import { getPostData } from "@/lib/articles";
-import { Inter } from "next/font/google";
 import CustomButton from "@/components/Button";
 import "./page.module.css"
 

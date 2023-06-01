@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Toolbar, Typography } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import React from "react";
 
 function Footer() {

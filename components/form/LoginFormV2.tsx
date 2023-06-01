@@ -1,21 +1,14 @@
 "use client";
+
 import { Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import { Button, Card, CardContent, CardHeader, TextField } from "@mui/material";
 
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Please enter an email")
-    .required("Please do not leave blanks"),
-  password: Yup.string()
-    .min(6)
-    .matches(passwordRegex, "Must contain at least one letter and one number")
-    .required("Please do not leave blanks"),
-});
 
-const anotherValidationSchema = Yup.object().shape({
+
+const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter an email")
     .test("email-match", "Wrong email", function (value) {
@@ -39,7 +32,7 @@ function LoginFormV2() {
         email: "",
         password: "",
       }}
-      validationSchema={anotherValidationSchema}
+      validationSchema={validationSchema}
       validateOnBlur={false}
       validateOnChange={false}
       onSubmit={(values, actions) => {

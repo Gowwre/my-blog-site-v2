@@ -57,7 +57,6 @@ export async function getPostData(id: string): Promise<PostData> {
     .process(matterResult.content);
 
   const contentHtml = processedResult.toString();
-  console.log(contentHtml);
   return {
     id,
     contentHtml,
