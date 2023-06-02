@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@mui/material";
+import  Button  from "@mui/material/Button";
 import React from "react";
 
 function CustomButton({ children }: { children: React.ReactNode }) {

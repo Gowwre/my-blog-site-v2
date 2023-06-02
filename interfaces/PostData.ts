@@ -1,6 +1,6 @@
-export interface PostData {
+export default interface PostData {
   id: string;
   title: string;
   date: string;
   contentHtml?: string;
-}
+} 

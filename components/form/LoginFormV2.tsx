@@ -1,15 +1,14 @@
 "use client";
 
-import { Form, Formik } from "formik";
+
 import React from "react";
 import * as Yup from "yup";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  TextField,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import TextField from "@mui/material/TextField";
+import { Formik,Form } from "formik";
 
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 

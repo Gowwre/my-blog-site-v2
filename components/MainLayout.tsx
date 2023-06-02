@@ -1,8 +1,7 @@
 "use client";
 
-import { AppBar, Container } from "@mui/material";
+import Container from "@mui/material/Container";
 import React from "react";
-import Navigation from "./Navigation";
 import Footer from "./Footer";
 import ImprovedNavigation from "./TempNavigation";
 

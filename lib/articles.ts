@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { PostData } from "@/interfaces/PostData";
+import  PostData  from "@/interfaces/PostData";
 import PostId from "@/interfaces/PostId";
 import { remark } from "remark";
 import html from "remark-html";
