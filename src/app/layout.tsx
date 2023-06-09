@@ -1,6 +1,7 @@
 import MainLayout from "@/components/MainLayout";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { NextAuthProvider } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`h-full`}>
       <body className="min-h-full grid">
+        <NextAuthProvider>
         <MainLayout>{children}</MainLayout>
+        </NextAuthProvider>
       </body>
     </html>
   );

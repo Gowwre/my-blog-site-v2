@@ -9,27 +9,20 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import TextField from "@mui/material/TextField";
 import { Formik,Form } from "formik";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Please enter an email")
-    .test("email-match", "Wrong email", function (value) {
-      const password = this.parent.password;
-      return value === "email@example.com" && password === "password123";
-    }),
-  password: Yup.string().test(
-    "password-match",
-    "Wrong password",
-    function (value) {
-      const email = this.parent.email;
-      return email === "email@example.com" && value === "password123";
-    }
-  ),
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().matches(passwordRegex, "Invalid password").required("Required")
+  
 });
 
+const callbackUrl='/'
 function LoginFormV2() {
+  const router = useRouter()
   return (
     <Formik
       initialValues={{
@@ -39,11 +32,22 @@ function LoginFormV2() {
       validationSchema={validationSchema}
       validateOnBlur={false}
       validateOnChange={false}
-      onSubmit={(values, actions) => {
+      onSubmit={ async (values, actions) => {
+        console.log(values);
+        
+        const response = await signIn('credentials',{
+          redirect:false,
+          email:values.email,
+          password:values.password,
+          callbackUrl
+        })
         actions.resetForm();
-        //this code is meant to set session into the browser but I have yet to make it work
-        // sessionStorage.setItem("email", values.email);
-        // sessionStorage.setItem("password", values.password);
+        console.log(response);
+
+        if(!response?.error)
+        {
+          router.push(callbackUrl);
+        }
       }}
     >
       {(props) => (

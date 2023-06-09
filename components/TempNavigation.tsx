@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
-import {signIn} from "next-auth/react";
+import { signIn,signOut, useSession } from "next-auth/react";
 
 const drawerWidth = 240;
 const navItems = [
@@ -25,6 +25,8 @@ const navItems = [
 
 const ImprovedNavigation = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const {data:session} = useSession()
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -84,7 +86,14 @@ const ImprovedNavigation = () => {
                 <Link href={`${item.href}`}>{item.name}</Link>
               </Button>
             ))}
-          </Box>
+            {session ? <Button onClick={() => signOut({callbackUrl:'/'})}> LOGOUT
+            </Button>
+:  <Button onClick={() => signIn()}>
+              LOGIN
+            </Button> 
+             
+}
+                                   </Box>
         </Toolbar>
       </AppBar>
       <Box component="nav">
