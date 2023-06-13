@@ -4,9 +4,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const graphqlUrl = `http://localhost:3001/graphql`;
 const restUrl = "http://localhost:3001/auth/login";
-const query = `query($email:String,$password:String){
+const query = `query($email:String!,$password:String!){
     signIn(
-        loginCredentials: {email: $email, password: $password
+        loginCredentials: {email: $email, password: $password}
     ) {
         email
         userId
@@ -40,33 +40,35 @@ export const authOptions: NextAuthOptions = {
         const { ...leftover } = credentials;
         console.log(leftover);
         console.log();
-        const res = await fetch(graphqlUrl, {
-          method: "POST",
-          body: JSON.stringify({
-            query,
-            variables: {
-              email: credentials?.email,
-              password: credentials?.password,
+        try {
+          const res = await fetch(graphqlUrl, {
+            method: "POST",
+            body: JSON.stringify({
+              query,
+              variables: {
+                email: credentials?.email,
+                password: credentials?.password,
+              },
+            }),
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
             },
-          }),
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-        });
-        console.log(
-          "The credentials stringified is " + JSON.stringify(credentials),
-        );
-        const user = await res.json();
-        console.log(user);
-        if (res.ok && user) {
-          return {
-            id: user.userId,
-            name: user.username,
-            email: user.email,
-          };
+          });
+          const user = await res.json();
+          console.log(user);
+          if (res.ok && user) {
+            return {
+              id: user.userId,
+              name: user.username,
+              email: user.email,
+            };
+          }
+          return null;
+        } catch (error) {
+          console.log(error);
         }
-        return null;
+        return null
       },
     }),
   ],
