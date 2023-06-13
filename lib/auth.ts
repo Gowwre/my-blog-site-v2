@@ -1,5 +1,18 @@
+import { createRequire } from "module";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+const graphqlUrl = `http://localhost:3001/graphql`;
+const restUrl = "http://localhost:3001/auth/login";
+const query = `query($email:String,$password:String){
+    signIn(
+        loginCredentials: {email: $email, password: $password
+    ) {
+        email
+        userId
+        username
+    }
+}`;
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -8,19 +21,7 @@ export const authOptions: NextAuthOptions = {
   jwt: {
     maxAge: 120,
   },
-  events: {
-    async signIn(message) {
-      console.log(message);
-    },
-    async session(message) {
-      console.log(message);
-    },
 
-    async signOut(message) {
-      console.log(message);
-    },
-  },
-  debug: true,
   providers: [
     CredentialsProvider({
       name: "email and password",
@@ -33,38 +34,52 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch("http://localhost:3001/auth/login", {
+        console.log(
+          `The value of credentials is ${credentials?.email} and ${credentials?.password}`,
+        );
+        const { ...leftover } = credentials;
+        console.log(leftover);
+        console.log();
+        const res = await fetch(graphqlUrl, {
           method: "POST",
-          body: JSON.stringify(credentials),
+          body: JSON.stringify({
+            query,
+            variables: {
+              email: credentials?.email,
+              password: credentials?.password,
+            },
+          }),
           headers: {
             "Content-Type": "application/json",
+            "Accept": "application/json",
           },
         });
+        console.log(
+          "The credentials stringified is " + JSON.stringify(credentials),
+        );
         const user = await res.json();
         console.log(user);
         if (res.ok && user) {
           return {
-            id:user.userId,
-            name:user.username,
-            email:user.email,
+            id: user.userId,
+            name: user.username,
+            email: user.email,
           };
         }
         return null;
       },
-      
     }),
   ],
-  callbacks:{
-    session: ({session,token})=>{
-      console.log('Session Callback',{session,token});
+  callbacks: {
+    session: ({ session, token }) => {
+      // console.log('Session Callback',{session,token});
       return {
         ...session,
-        user:{
-
+        user: {
           ...session.user,
-          id:token.id
-        }
-      }
+          id: token.id,
+        },
+      };
     },
     jwt: ({ token, user }) => {
       if (user) {
@@ -76,5 +91,5 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-  }
+  },
 };
